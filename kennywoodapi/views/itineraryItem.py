@@ -40,7 +40,7 @@ class ItineraryItems(ViewSet):
     def create(self, request):
         new_itinerary_item = Itinerary()
         new_itinerary_item.starttime = request.data["starttime"]
-        new_itinerary_item.customer_id = request.auth.user.id
+        new_itinerary_item.customer_id = request.auth.user.customer.id
         new_itinerary_item.attraction_id = request.data["attraction_id"]
 
         new_itinerary_item.save()
@@ -71,7 +71,7 @@ class ItineraryItems(ViewSet):
         item = Itinerary.objects.get(pk=pk)
         item.starttime = request.data["starttime"]
         item.attraction_id = request.data["attraction_id"]
-        item.customer_id = request.data["customer_id"]
+        item.customer_id = request.auth.user.customer.id
         item.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
